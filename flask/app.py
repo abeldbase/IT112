@@ -14,5 +14,17 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/fortune")
+def fortune():
+    return render_template("fortune.html")
+
+
+@app.route('/data/', methods=['POST'])
+def data():
+    if request.method == 'POST':
+        fortune_data = request.fortune
+        return render_template('data.html', fortune_data=fortune_data)
+
+
 if __name__ == "__main__":
     app.run()
