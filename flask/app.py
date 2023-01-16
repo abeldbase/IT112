@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template
 
 
 app = Flask(__name__)
@@ -19,11 +19,9 @@ def fortune():
     return render_template("fortune.html")
 
 
-@app.route('/data/', methods=['POST'])
+@app.route("/data", methods=["POST"])
 def data():
-    if method == 'POST':
-        fortune_data = fortune
-        return render_template('data.html', fortune_data=fortune_data)
+    return render_template("data.html")
 
 
 if __name__ == "__main__":

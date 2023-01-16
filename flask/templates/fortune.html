@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block head %} {% endblock %} {% block body %}
-
+{% extends 'base.html' %} {% block head %}
+<title>Fortune Teller!</title>
+{% endblock %} {% block body %}
 <form method="POST" action="/fortune">
   <input type="text" name="user" />
   <select name="color">
@@ -10,7 +11,8 @@
   </select>
   <select name="number">
     <option>1</option>
-    <option>2</option>
+    <option>2</option
+    >p
     <option>3</option>
     <option>4</option>
   </select>
