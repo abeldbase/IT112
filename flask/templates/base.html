@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>home page</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/master.css')}}"
+    />
+    {% block head %}{% endblock %}
   </head>
   <body>
-    {% for color, number in fortune_data.items() %}
-    <h2>{{color}}</h2>
-    <p>{{numbers}}</p>
-    {% endfor %}
+    {% block body %}{% endblock %}
   </body>
 </html>

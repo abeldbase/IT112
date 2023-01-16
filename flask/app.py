@@ -21,8 +21,8 @@ def fortune():
 
 @app.route('/data/', methods=['POST'])
 def data():
-    if request.method == 'POST':
-        fortune_data = request.fortune
+    if method == 'POST':
+        fortune_data = fortune
         return render_template('data.html', fortune_data=fortune_data)
 
 
