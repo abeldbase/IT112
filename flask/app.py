@@ -9,19 +9,16 @@ def index():
     return "<p>This is my Application!</p>"
 
 
-@app.route("/about")
+@app.route('/about')
 def about():
     return render_template("about.html")
 
 
-@app.route("/fortune")
+@app.route('/fortune', methods=['GET', 'POST'])
 def fortune():
-    return render_template("fortune.html")
-
-
-@app.route("/data", methods=["POST"])
-def data():
-    return render_template("data.html")
+    if request.method == 'POST':
+        return "show fortune"
+    return render_template('fortune.html')
 
 
 if __name__ == "__main__":

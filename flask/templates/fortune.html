@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block head %}
-<title>Fortune Teller!</title>
+<title>Fortune</title>
 {% endblock %} {% block body %}
 <form method="POST" action="/fortune">
   <input type="text" name="user" />
@@ -11,15 +11,10 @@
   </select>
   <select name="number">
     <option>1</option>
-    <option>2</option
-    >p
+    <option>2</option>
     <option>3</option>
     <option>4</option>
   </select>
   <button>submit</button>
 </form>
-<p>
-  You are a very charming person. You have a big heart and your smile lights up
-  the room .
-</p>
 {% endblock %}
