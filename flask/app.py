@@ -11,14 +11,14 @@ def index():
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template('about.html')
 
 
 @app.route('/fortune', methods=['GET', 'POST'])
 def fortune():
     if request.method == 'POST':
-        return "show fortune"
-    return render_template('fortune.html')
+        return f"Hi {request.form.get('name')}. You have selected {request.form.get('color')} &  {request.form.get('number')}"
+    return render_template('fortune_form.html')
 
 
 if __name__ == "__main__":
