@@ -1,6 +1,36 @@
 from flask import Flask, request, redirect, url_for, render_template
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
+db = SQLAlchemy(app)
+
+
+class Student(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    major = db.Column(db.String(50))
+
+    def __repr__(self):
+        return '<Student %r>' % self.name
+
+
+with app.app_context():
+    db.create_all()
+
+# student1 = Student(name='Neil deGrasse Tyson', email='neil@harvard.edu', major='astrophysics')
+# student2 = Student(name='Nikole Hannah Jones', email='nikole@howard.edu', major='journalism')
+# student3 = Student(name='Abel Sharon Dale', email='abel@howard.edu', major='PSIR')
+# db.session.add(student1)
+# db.session.add(student2)
+# db.session.add(student3)
+# db.session.commit()
+# students = Student.query.all()
+# student = Student.query.filter_by(id=2).first()
+students = Student.query.all()
+student = Student.query.filter_by(id=2).first()
 
 
 @app.route("/")
