@@ -122,7 +122,7 @@ def fortune():
 
 
 @app.route("/show_all")
-def show_students():
+def show_all():
     return render_template('show_all.html')
 
 
