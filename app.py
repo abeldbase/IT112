@@ -24,8 +24,8 @@ class Student(db.Model):
 
 
 # create / use the database
-with app.app_context():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
 
 # student1 = Student(name='Neil deGrasse Tyson', email='neil@harvard.edu', major='astrophysics')
