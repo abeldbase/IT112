@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+
+
 app = Flask(__name__)
 
 # set URI for the database to be used
