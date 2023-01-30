@@ -121,7 +121,7 @@ def fortune():
 # Create a Flask route to show a list of all items in your database
 
 
-@app.route("/students")
+@app.route("/show_all")
 def show_students():
     return render_template('show_all.html', students=Student.query.all())
 
