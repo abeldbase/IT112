@@ -123,12 +123,23 @@ def fortune():
 
 @app.route("/show_all")
 def show_all():
-    return render_template('show_all.html')
+    return render_template('show_all.html', students=student.query.all())
 
 
-@app.route("/student")
-def show_detail_for_student():
-    return " a student detail"
+@app.route('/new', methods=['GET', 'POST'])
+def new():
+    if request.method == 'POST':
+        if not request.form['name'] or not request.form['email'] or not request.form['email']:
+            flash('Please enter all the fields', 'error')
+        else:
+            student = students(request.form['name'], request.form['major'],
+                               request.form['major'], request.form['major'])
+
+            db.session.add(student)
+            db.session.commit()
+            flash('Record was successfully added')
+            return redirect(url_for('show_all'))
+    return render_template('new.html')
 
 
 if __name__ == "__main__":
