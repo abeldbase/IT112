@@ -23,12 +23,7 @@ class Student(db.Model):
         return '<Student %r>' % self.name
 
 
-# create / use the database
-    with app.app_context():
-        db.create_all()
-
-
-# student1 = Student(name='Neil deGrasse Tyson', email='neil@harvard.edu', major='astrophysics')
+# student1 = Student(name='Neil deGrasse Tyson',email='neil@harvard.edu', major='astrophysics')
 # student2 = Student(name='Nikole Hannah Jones', email='nikole@howard.edu', major='journalism')
 # student3 = Student(name='Abel Sharon Dale', email='abel@howard.edu', major='PSIR')
 # db.session.add(student1)
@@ -38,6 +33,7 @@ class Student(db.Model):
 # students = Student.query.all()
 # student = Student.query.filter_by(id=2).first()
 students = Student.query.all()
+
 student = Student.query.filter_by(id=2).first()
 
 
