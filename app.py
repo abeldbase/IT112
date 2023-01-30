@@ -123,7 +123,7 @@ def fortune():
 
 @app.route("/students")
 def show_students():
-    return " all students"
+    return render_template('show_all.html', students=Student.query.all())
 
 
 @app.route("/student")
