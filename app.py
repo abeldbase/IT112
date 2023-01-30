@@ -23,6 +23,11 @@ class Student(db.Model):
         return '<Student %r>' % self.name
 
 
+# create / use the database
+with app.app_context():
+    db.create_all()
+
+
 # student1 = Student(name='Neil deGrasse Tyson',email='neil@harvard.edu', major='astrophysics')
 # student2 = Student(name='Nikole Hannah Jones', email='nikole@howard.edu', major='journalism')
 # student3 = Student(name='Abel Sharon Dale', email='abel@howard.edu', major='PSIR')
@@ -32,9 +37,8 @@ class Student(db.Model):
 # db.session.commit()
 # students = Student.query.all()
 # student = Student.query.filter_by(id=2).first()
-students = Student.query.all()
-
-student = Student.query.filter_by(id=2).first()
+# students = Student.query.all()
+# student = Student.query.filter_by(id=2).first()
 
 
 @app.route("/")
@@ -49,6 +53,7 @@ def about():
 
 @app.route('/fortune', methods=['GET', 'POST'])
 def fortune():
+
     if request.method == 'POST':
         color = request.form.get('color')
         number = request.form.get('number')
@@ -113,6 +118,17 @@ def fortune():
 
         return f"Hi {request.form.get('name')}. You have selected {request.form.get('color')} &  {request.form.get('number')}"
     return render_template('fortune_form.html')
+# Create a Flask route to show a list of all items in your database
+
+
+@app.route("/students")
+def show_students():
+    return " all students"
+
+
+@app.route("/student")
+def show_detail_for_student():
+    return " a student detail"
 
 
 if __name__ == "__main__":
