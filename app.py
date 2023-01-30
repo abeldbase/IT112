@@ -1,8 +1,14 @@
 from flask import Flask, request, redirect, url_for, render_template
-
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
+
+# set URI for the database to be used
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
+
+# associate a SQLAlchemy object with the Flask app
 db = SQLAlchemy(app)
+
+# create a 'student' class that maps to a db table
 
 
 class Student(db.Model):
@@ -15,8 +21,10 @@ class Student(db.Model):
         return '<Student %r>' % self.name
 
 
+# create / use the database
 with app.app_context():
     db.create_all()
+
 
 # student1 = Student(name='Neil deGrasse Tyson', email='neil@harvard.edu', major='astrophysics')
 # student2 = Student(name='Nikole Hannah Jones', email='nikole@howard.edu', major='journalism')
