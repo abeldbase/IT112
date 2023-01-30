@@ -1,9 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
-
-
-app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 db = SQLAlchemy(app)
 
