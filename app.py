@@ -20,7 +20,7 @@ class Student(db.Model):
     major = db.Column(db.String(50))
 
     def __repr__(self):
-        return '<Student %r>' % self.name
+        return '<Student %r>' % self.name. email. major
 
 
 # create / use the database
@@ -121,9 +121,9 @@ def fortune():
 # Create a Flask route to show a list of all items in your database
 
 
-@app.route("/show_all")
+@app.route('/')
 def show_all():
-    return render_template('show_all.html', students=student.query.all())
+    return render_template('show_all.html', students=students.query.all())
 
 
 @app.route('/new', methods=['GET', 'POST'])
