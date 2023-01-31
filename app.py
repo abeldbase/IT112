@@ -1,8 +1,47 @@
-from flask import Flask, request, redirect, url_for, render_template
+
+from flask import Flask, flash, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
+
+
+# data is a Python dict
+data = {"it112": 25, "it121": 18}
+
+
+@app.get('/api/courses')
+def courses():
+    # send HTTP response with content-type: application/json
+    return jsonify(data)
+
+
+app.run(host='0.0.0.0', port=81)
+
+
+@app.get('/api/courses')
+def courses():
+    # send HTTP response with content-type: application/json
+    return jsonify(data)
+# create a 'student' class that maps to a db table
+
+
+class Student(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    city = db.Column(db.String(50))
+
+
+@property
+def serialize(self):
+    """Return object data in easily serializable format"""
+    return {
+        'id': self.id,
+        'name': self.name,
+        'city': self.city
+    }
+
 
 # set URI for the database to be used
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
@@ -121,9 +160,9 @@ def fortune():
 # Create a Flask route to show a list of all items in your database
 
 
-@app.route('/')
+@app.route('/show_all')
 def show_all():
-    return render_template('show_all.html', students=students.query.all())
+    return render_template('show_all.html', students=Student.query.all())
 
 
 @app.route('/new', methods=['GET', 'POST'])
@@ -132,14 +171,23 @@ def new():
         if not request.form['name'] or not request.form['email'] or not request.form['email']:
             flash('Please enter all the fields', 'error')
         else:
-            student = students(request.form['name'], request.form['major'],
-                               request.form['major'], request.form['major'])
+            student = student(request.form['name'], request.form['major'],
+                              request.form['major'], request.form['major'])
 
             db.session.add(student)
             db.session.commit()
             flash('Record was successfully added')
             return redirect(url_for('show_all'))
-    return render_template('new.html')
+    return render_template('new.html', student=Student.query.filter_by(id=2).first())
+
+
+@app.get('/api/courses')
+def courses():
+    # send HTTP response with content-type: application/json
+    return jsonify(data)
+
+
+app.run(host='0.0.0.0', port=81)
 
 
 if __name__ == "__main__":
