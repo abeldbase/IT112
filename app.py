@@ -20,27 +20,45 @@ def courses():
 app.run(host='0.0.0.0', port=81)
 
 
-@app.get('/api/courses')
-def courses():
-    # send HTTP response with content-type: application/json
-    return jsonify(data)
 # create a 'student' class that maps to a db table
 
 
-class Student(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    city = db.Column(db.String(50))
-
-
 @property
-def serialize(self):
+def serialized(self):
     """Return object data in easily serializable format"""
     return {
         'id': self.id,
         'name': self.name,
         'city': self.city
     }
+
+
+@app.route('/api/students')
+def api_students():
+    # return db query results as a JSON list
+    return jsonify([student.serialized for student in Student.query.all()])
+
+
+@app.post('/api/course')
+def add_course():
+    # normally we would validate the submission before adding to our list
+    data.update(request.get_json())
+    return '', 204
+
+
+@app.post('/api/student')
+def add_student():
+    # normally we would validate the submission before adding to our list
+    data = request.get_json()
+    try:
+        student = Student(name=data['name'], city=data['city'])
+        db.session.add(student)
+        db.session.commit()
+        return jsonify({"status": "success"})
+    except Exception:
+        return app.response_class(response={"status": "failure"},
+                                  status=500,
+                                  mimetype='application/json')
 
 
 # set URI for the database to be used
