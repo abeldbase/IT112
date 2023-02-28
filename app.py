@@ -6,7 +6,38 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+# set URI for the database to be used
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 
+# associate a SQLAlchemy object with the Flask app
+db = SQLAlchemy(app)
+
+# create a 'student' class that maps to a db table
+
+
+class Student(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    major = db.Column(db.String(50))
+
+    def __repr__(self):
+        return '<Student %r>' % self.name. email. major
+
+    @property
+    def serialized(self):
+        """Return object data in easily serializable format"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'major': self.major,
+        }
+
+
+# create / use the database
+with app.app_context():
+    db.create_all()
 # data is a Python dict
 data = {"it112": 25, "it121": 18}
 
@@ -17,20 +48,7 @@ def courses():
     return jsonify(data)
 
 
-app.run(host='0.0.0.0', port=81)
-
-
 # create a 'student' class that maps to a db table
-
-
-@property
-def serialized(self):
-    """Return object data in easily serializable format"""
-    return {
-        'id': self.id,
-        'name': self.name,
-        'city': self.city
-    }
 
 
 @app.route('/api/students')
@@ -59,30 +77,6 @@ def add_student():
         return app.response_class(response={"status": "failure"},
                                   status=500,
                                   mimetype='application/json')
-
-
-# set URI for the database to be used
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
-
-# associate a SQLAlchemy object with the Flask app
-db = SQLAlchemy(app)
-
-# create a 'student' class that maps to a db table
-
-
-class Student(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    major = db.Column(db.String(50))
-
-    def __repr__(self):
-        return '<Student %r>' % self.name. email. major
-
-
-# create / use the database
-with app.app_context():
-    db.create_all()
 
 
 # student1 = Student(name='Neil deGrasse Tyson',email='neil@harvard.edu', major='astrophysics')
@@ -197,12 +191,6 @@ def new():
             flash('Record was successfully added')
             return redirect(url_for('show_all'))
     return render_template('new.html', student=Student.query.filter_by(id=2).first())
-
-
-@app.get('/api/courses')
-def courses():
-    # send HTTP response with content-type: application/json
-    return jsonify(data)
 
 
 app.run(host='0.0.0.0', port=81)
