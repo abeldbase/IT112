@@ -48,6 +48,9 @@ def courses():
     return jsonify(data)
 
 
+app.run(host='0.0.0.0', port=81)
+
+
 @app.post('/api/course')
 def add_course():
     # normally we would validate the submission before adding to our list
@@ -190,9 +193,6 @@ def new():
             flash('Record was successfully added')
             return redirect(url_for('show_all'))
     return render_template('new.html', student=Student.query.filter_by(id=2).first())
-
-
-app.run(host='0.0.0.0', port=81)
 
 
 if __name__ == "__main__":
