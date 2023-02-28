@@ -48,6 +48,12 @@ def courses():
     return jsonify(data)
 
 
+@app.post('/api/course')
+def add_course():
+    # normally we would validate the submission before adding to our list
+    data.update(request.get_json())
+    return '', 204
+
 # create a 'student' class that maps to a db table
 
 
@@ -55,13 +61,6 @@ def courses():
 def api_students():
     # return db query results as a JSON list
     return jsonify([student.serialized for student in Student.query.all()])
-
-
-@app.post('/api/course')
-def add_course():
-    # normally we would validate the submission before adding to our list
-    data.update(request.get_json())
-    return '', 204
 
 
 @app.post('/api/student')
